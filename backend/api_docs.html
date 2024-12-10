@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        pre {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #444;
+            border: 1px solid #555;
+            border-radius: 5px;
+            overflow-x: auto;
+            color: #fff;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 5px 0;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>API Documentation</h1>
+
+    <section>
+        <h2>Scraping API</h2>
+        <p>This API is used to scrape websites.</p>
+        <p>Request Example:</p>
+        <pre>GET http://localhost:8000/api/scrape?website_url=https://nextjs.org/docs</pre>
+        <p>Response:</p>
+        <pre>{ 'msg': 'Success in scraping website' }</pre>
+    </section>
+
+    <section>
+        <h2>Chatbot API</h2>
+        <p>This API is used for chatting with a scraping chatbot.</p>
+        <p>Request Example:</p>
+        <pre>GET http://localhost:8000/api/chat?user_message=hello</pre>
+        <p>Response:</p>
+        <pre>"Hello! How can I assist you today?"</pr
