@@ -28,7 +28,7 @@ const Home = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/scrape?website_url=${text}`
+        `${process.env.NEXT_PUBLIC_RESTFUL_API}/scrape?website_url=${text}`
       );
       console.log(response.data);
       if (response.data.msg) {
@@ -51,8 +51,8 @@ const Home = () => {
           <div className="m-auto w-full flex flex-col items-center justify-center">
             <div className="flex flex-col gap-5">
               <div className="text-center">
-                <h1 className="text-7xl sm:pb-3 dark:text-white">
-                  Commune Scraping Bot
+                <h1 className="text-7xl font-bold sm:pb-3 dark:text-white">
+                  Commune Scraping ChatBot
                 </h1>
               </div>
               <div className="hidden sm:block text-center py-5">
@@ -65,28 +65,22 @@ const Home = () => {
               <div className="flex justify-center gap-4 py-5">
                 <Input
                   type="text"
-                  placeholder="Enter the URL"
-                  className="text-xl pl-4 rounded-xl h-[60px] w-[500px] dark:border-transparent border-blue-400 border-2"
+                  placeholder="Enter the URL of website..."
+                  className="text-xl pl-4 rounded-2xl h-[60px] w-[500px] dark:border-transparent border-blue-400 border-2"
                   onChange={(e) => setText(e.target.value)}
                   onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
                     chatting(e)
                   }
                   autoFocus
                 />
-                {isLoading ? (
-                  <div className="px-8">
-                    <Loading />
-                  </div>
-                ) : (
-                  <Button
-                    size="large"
-                    onClick={scrapeUrl}
-                    disabled={isLoading}
-                    className="h-[60px] rounded-2xl bg-gray-900 text-white text-xl"
-                  >
-                    Get Started
-                  </Button>
-                )}
+                <Button
+                  size="large"
+                  onClick={scrapeUrl}
+                  disabled={isLoading}
+                  className="h-[60px] w-[150px] rounded-2xl text-xl"
+                >
+                  {isLoading ? <Loading /> : "Get Started"}
+                </Button>
               </div>
             </div>
           </div>

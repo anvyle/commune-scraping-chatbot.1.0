@@ -40,7 +40,7 @@ def embed_data():
 
         # Map sources from file directory to web source
         for document in documents:
-            source = document.metadata["source"].replace(".html", "").replace("scrape/", "")
+            source = document.metadata["source"].replace(".html", "").replace("scrape/", "scrape\\")
             document.metadata["source"] = sitemap.get(source, "")
 
         embedding_model = OpenAIEmbeddings(model="text-embedding-ada-002")

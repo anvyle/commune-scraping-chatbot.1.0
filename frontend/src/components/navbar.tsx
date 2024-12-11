@@ -39,7 +39,7 @@ export default function NavigationBar() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 w-full dark:bg-gray-500 bg-gray-700 shadow-md py-0 my-4 dark:text-white z-10">
+      <div className="fixed top-0 left-0 w-full shadow-md py-0 my-4 dark:text-white z-10">
         <div className="min-h-full">
           <div className="mx-auto px-20">
             <div className="flex h-16 justify-between items-center">

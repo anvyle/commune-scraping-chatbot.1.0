@@ -5,6 +5,7 @@ import { Spin } from 'antd';
 
 export default function Loading() {
    return (
-      <Spin indicator={<LoadingOutlined style={{ fontSize: 55 }} spin />} />
+      // <Spin indicator={<LoadingOutlined style={{ fontSize: 55 }} spin />} />
+      <div className="loader"></div>
    );
 }

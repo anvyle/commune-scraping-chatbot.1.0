@@ -65,7 +65,6 @@ def conversation_with_chatbot():
         # Define prediction function
         def predict(message):
             response = retrieval_qa.run({"question": message})
-            logger.info(f"Response: {response}")
 
             response_dict = json.loads(response)
             answer = response_dict["answer"]
