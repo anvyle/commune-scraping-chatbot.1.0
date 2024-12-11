@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Message {
   text: string;
-  links: { description: string; url: string }[];
+  links: { url: string }[];
   isUser: boolean;
 }
 

@@ -2,7 +2,7 @@
 import { RootState } from "@/store";
 import { Message, setMessages } from "@/store/slice/msgSlice";
 import { Button, Image, Input, message } from "antd";
-import { SendOutlined } from "@ant-design/icons";
+import { SendOutlined, UserOutlined, OpenAIOutlined } from "@ant-design/icons";
 import axios from "axios";
 import {
   AwaitedReactNode,
@@ -18,11 +18,13 @@ import {
   useState,
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Loading from "@/components/loading";
 
 const { TextArea } = Input;
 
 export default function Page() {
   const [text, setText] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const messages = useSelector((state: RootState) => state.message.messages);
 
@@ -51,17 +53,18 @@ export default function Page() {
   const sendMessage = async () => {
     const newMessage: Message = {
       text,
-      links: [{ description: "", url: "" }],
+      links: [{ url: "" }],
       isUser: true,
     };
 
     // Assuming setMessages is an action creator function
     dispatch(setMessages(newMessage));
     setText("");
+    setIsLoading(true);
 
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/chat?user_message=${text}`
+        `${process.env.NEXT_PUBLIC_RESTFUL_API}/chat?user_message=${text}`
       );
 
       if (!response.data.error) {
@@ -73,13 +76,13 @@ export default function Page() {
               response.data.length === 0
                 ? "Sorry, As an AI, I can't answer your questions."
                 : mainContent,
-            links: seeMoreLinks.map((link) => {
-              const [description, url] = link.trim().split(" ");
-              return { description, url };
-            }),
+            links: seeMoreLinks
+              .join("")
+              .trim()
+              .split("\n")
+              .map((link) => ({ url: link.trim() })), 
             isUser: false,
           };
-
           // Dispatching the action after receiving the response
           dispatch(setMessages(newResMessage));
         } else {
@@ -89,13 +92,15 @@ export default function Page() {
     } catch (error) {
       console.error("Error:", error);
       message.error("Failed to send message.");
+    } finally {
+    setIsLoading(false);
     }
   };
 
   return (
     <div className="flex flex-col justify-between w-[60%] mx-auto h-screen">
       <div className="flex-1 relative w-[90%] mb-6 mt-20 overflow-hidden overflow-y-auto mx-auto dark:text-white">
-        <div className="w-full p-6 text-xl">
+        <div className="w-full p-6">
           {messages.map(
             (
               message: {
@@ -118,34 +123,29 @@ export default function Page() {
               <div key={index} className="py-2">
                 <div>
                   {message.isUser ? (
-                    <div className="flex flex-row items-center gap-3">
+                    <div className="flex flex-row items-center mt-10 justify-end">
                       <div className="flex">
-                        <Image
-                          width={40}
-                          alt="chatbotlogo"
-                          className="text-white rounded-full"
-                          src="https://i.pinimg.com/564x/3c/73/ee/3c73ee8caf56fcc08bd11d595dca167d.jpg"
-                        />
+                        <UserOutlined className="text-xl rounded-full border p-3" />
                       </div>
-                      <div className="flex font-bold">You</div>
                     </div>
                   ) : (
-                    <Image
-                      width={50}
-                      alt="chatbotlogo"
-                      className="text-white"
-                      src="https://lirp.cdn-website.com/df735c7c/dms3rep/multi/opt/MicrosoftTeams-image+%28123%29-1920w.png"
-                    />
+                    <OpenAIOutlined className="text-xl rounded-full border p-3" />
                   )}
 
-                  <div className="ml-10 overflow-x-auto">{message.text}</div>
+                  <div
+                    className={`ml-16 -mt-7 overflow-x-auto ${
+                      message.isUser ? "flex mr-16 -mt-7 justify-end" : ""
+                    }`}
+                  >
+                    {message.text}
+                  </div>
 
-                  {message.links && message.links.length > 0 && (
-                    <div className="ml-10">
+                  {message.links && message.links[0]?.url !== "" && (
+                    <div className="ml-16">
                       {message.isUser ? (
                         ""
                       ) : (
-                        <h2 className="mt-2">See more:</h2>
+                        <h2 className="mt-2">Sources:</h2>
                       )}
                       {message.links.map((link, idx) => (
                         <div key={idx}>
@@ -153,8 +153,9 @@ export default function Page() {
                             href={link.url}
                             target="_blank"
                             rel="noopener noreferrer"
+                            className="text-sm underline hover:text-blue-600"
                           >
-                            {link.description}
+                            {link.url}
                           </a>
                         </div>
                       ))}
@@ -164,6 +165,14 @@ export default function Page() {
                 <div ref={messagesEndRef} />
               </div>
             )
+          )}
+          {isLoading && (
+            <div>
+              <OpenAIOutlined className="text-xl rounded-full border p-3" />
+              <div className="ml-20 -mt-7">
+                <Loading />
+              </div>
+            </div>
           )}
         </div>
       </div>
