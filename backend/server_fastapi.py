@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import logging
+import uvicorn
 
 from main import conversation_with_chatbot
 from scrape import scrape_website
@@ -60,5 +61,4 @@ async def chat_with_bot(user_message: str):
         raise HTTPException(status_code=500, detail='Internal Server Error')
 
 if __name__ == '__main__':
-    import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000, debug=True)
