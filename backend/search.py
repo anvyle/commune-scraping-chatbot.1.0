@@ -11,6 +11,7 @@ load_dotenv()
 parser = argparse.ArgumentParser()
 parser.add_argument("search_string", type=str)
 
+
 if __name__ == "__main__":
     if not os.path.exists("./chroma"):
         print("No chroma persisted, run `python embed.py` to create one")
