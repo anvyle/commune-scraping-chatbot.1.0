@@ -27,6 +27,7 @@ logger = logging.getLogger(__name__)
 def index():
     return 'Welcome to the FastAPI server!'
 
+
 @app.get('/api/scrape')
 async def scrape_website_embed(website_url: str):
     try:
