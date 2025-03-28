@@ -8,7 +8,6 @@ from langchain.embeddings import OpenAIEmbeddings
 
 load_dotenv()
 
-
 parser = argparse.ArgumentParser()
 parser.add_argument("search_string", type=str)
 
