@@ -19,6 +19,7 @@ logger = logging.getLogger(__name__)
 def index():
     return 'Welcome to the Flask server!'
 
+# Deine API docs
 @app.route('/api/api_docs', methods=['GET'])
 def send_html_file():
     try:
@@ -27,6 +28,7 @@ def send_html_file():
         logger.error(f"An error occurred: {e}")
         return jsonify({'error': 'Internal Server Error'}), 500
 
+# Define Scraping Route
 @app.route('/api/scrape', methods=['GET'])
 def scrape_website_embed():
     try:
@@ -44,7 +46,8 @@ def scrape_website_embed():
     except Exception as e:
         logger.error(f"An error occurred: {e}")
         return jsonify({'error': 'Internal Server Error'}), 500
-    
+
+# Define Chatting Route
 @app.route('/api/chat', methods=['GET'])
 def chat_with_bot():
     try:
