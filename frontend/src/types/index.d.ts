@@ -1,8 +1,8 @@
-// export type IAddStaking = {
-//   validator: string
-//   amount: string
-//   callback?: () => void
-// }
+export type IAddStaking = {
+  validator: string
+  amount: string
+  callback?: () => void
+}
 
 export type ITransfer = {
   to: string
