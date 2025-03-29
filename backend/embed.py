@@ -13,12 +13,12 @@ from dotenv import load_dotenv
 def embed_data():
     print("Embeding...")
     try:
-        # load_dotenv()
+        load_dotenv()
 
-        # if os.path.exists("./chroma"):
-        #     shutil.rmtree("./chroma")
+        if os.path.exists("./chroma"):
+            shutil.rmtree("./chroma")
         
-        # os.mkdir("./chroma")
+        os.mkdir("./chroma")
 
         loader = DirectoryLoader(
             "./scrape",
