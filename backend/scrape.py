@@ -15,10 +15,10 @@ def scrape_website(site_url: str, depth: int = 10) -> dict:
     """Scrape the website and generate a sitemap."""
     print(f"Scraping in {site_url}")
     try:
-        if os.path.exists("./scrape"):
-            shutil.rmtree("./scrape")
+        # if os.path.exists("./scrape"):
+        #     shutil.rmtree("./scrape")
         
-        os.mkdir("./scrape")
+        # os.mkdir("./scrape")
         
         def clean_url(url: str) -> str:
             """Clean the URL to be used as a filename."""
